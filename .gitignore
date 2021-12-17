@@ -1,0 +1,7 @@
+# Project exclude paths
+/dist/
+/dist/js/
+/node_modules/
+.idea
+.env.development.local
+.env.production.local
