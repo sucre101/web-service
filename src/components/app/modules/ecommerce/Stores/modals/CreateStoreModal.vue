@@ -119,7 +119,7 @@ export default {
         let classes = typeof el === 'object' ? el.$el.classList : el.classList
         let operator = isValid ? 'remove' : 'add'
         classes[operator]('error')
-        if (!isValid) this.notifier.warning(message)
+        if (!isValid) this.$awn.warning(message)
       }
 
       let validate = fields => {

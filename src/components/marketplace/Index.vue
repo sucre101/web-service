@@ -1,5 +1,8 @@
 <template>
   <div class="box-list modules">
+
+    <preloader v-if="$root.loading"/>
+
     <div class="top-header">
       <h4>Feature List</h4>
       <div class="feature-filter">
@@ -137,6 +140,7 @@ export default {
   },
 
   created() {
+    this.$root.$emit('loading', true)
     this._loadModules()
   },
 
@@ -206,6 +210,7 @@ export default {
             this.installedModules = [...res.data[0].installed]
           }
         })
+        .then(res => this.$root.$emit('loading', false))
 
     }
 

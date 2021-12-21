@@ -57,7 +57,7 @@ export default {
       axios.patch('positions', $data)
         .then((res) => {
           if (res.data.success) {
-            this.notifier.success(`Position < ${$data.role.name} > is updated`)
+            this.$awn.success(`Position < ${$data.role.name} > is updated`)
           }
         })
 

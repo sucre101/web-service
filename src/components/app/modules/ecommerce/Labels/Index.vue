@@ -108,7 +108,7 @@ export default {
 
     removePicture($index) {
       if (this.currentLabel.image === null) {
-        this.notifier.warning('Picture is empty')
+        this.$awn.warning('Picture is empty')
         return;
       }
 
@@ -129,7 +129,7 @@ export default {
             return val.id !== this.currentLabel.id
           })
 
-          this.notifier.success('Label deleted')
+          this.$awn.success('Label deleted')
         })
         .then(res => this.currentLabel = this.labels[0])
     },
@@ -158,7 +158,7 @@ export default {
       axios.patch(`${moduleUrl(this.$route)}/label`, this.currentLabel)
         .then((res) => {
           if (res.data.success) {
-            this.notifier.success('Save label')
+            this.$awn.success('Save label')
             this.activeForSave = this.edit = false
           }
         })

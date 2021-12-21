@@ -129,7 +129,7 @@ export default {
               return val.id !== $id
             })
 
-            this.notifier.success('Union deleted')
+            this.$awn.success('Union deleted')
           }
         })
 
@@ -151,7 +151,7 @@ export default {
         .then((res) => {
           if (res.data.success) {
             this.changeUnion = false
-            this.notifier.success('Union changed')
+            this.$awn.success('Union changed')
           }
         })
         .then(res => this.activeForSave = false)

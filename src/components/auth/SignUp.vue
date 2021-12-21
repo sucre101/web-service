@@ -98,7 +98,7 @@ export default {
     register() {
 
       if (!this.acceptPolitics) {
-        this.notifier.warning('Second password incorrect')
+        this.$awn.warning('Second password incorrect')
         this.error = true
         return false;
       }

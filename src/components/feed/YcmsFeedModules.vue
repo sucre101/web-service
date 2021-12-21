@@ -68,9 +68,9 @@
         })
         .then(res => {
           if (res.data.message === "created"){
-            this.notifier.success('Module created successfully')
+            this.$awn.success('Module created successfully')
           }else{
-            this.notifier.success('Module updated successfully')
+            this.$awn.success('Module updated successfully')
           }
 
           this.newModule.name = "",
@@ -89,7 +89,7 @@
       },
       deleteModuleConfirm(id){
         this.markedForDelete = id;
-        this.notifier.confirm('Are you sure?', this.deleteModule())
+        this.$awn.confirm('Are you sure?', this.deleteModule())
       },
       deleteModule(){
         let index = this.modules.map(x => {
@@ -101,7 +101,7 @@
         })
         .then(res => {
           this.modules.splice(index, 1)
-          this.notifier.success('Module deleted successfully')
+          this.$awn.success('Module deleted successfully')
         })
       },
     },

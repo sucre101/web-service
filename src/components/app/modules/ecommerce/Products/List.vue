@@ -115,7 +115,7 @@ export default {
         .then((res) => {
           if (res.data.success) {
             this.products.push(res.data.product)
-            this.notifier.success('Product duplicated')
+            this.$awn.success('Product duplicated')
           }
         })
     },
@@ -130,7 +130,7 @@ export default {
         .then((res) => {
           if (res.data.success) {
             this.products = $filteredArray
-            this.notifier.success('Product deleted')
+            this.$awn.success('Product deleted')
           }
         })
 
@@ -139,7 +139,7 @@ export default {
     _createProduct() {
 
       if (this.categoryId === null || (this.newProduct === null || this.newProduct === '')) {
-        this.notifier.warning('One ore more params dont filled')
+        this.$awn.warning('One ore more params dont filled')
         return false
       }
 
@@ -153,7 +153,7 @@ export default {
         .then((res) => {
           if (res.data.success) {
             this.products.push(res.data.product)
-            this.notifier.success('Product created')
+            this.$awn.success('Product created')
           }
         })
         .then(res => this.inputField = false)

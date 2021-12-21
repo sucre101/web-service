@@ -15,7 +15,13 @@
       <input type="password" class="input-field" placeholder="password" v-model.trim="authForm.password">
     </div>
 
-    <div class="button sign-in-button" @click="authenticate()">Sign in</div>
+    <button
+        type="button"
+        class="button sign-in-button"
+        ref="signinBtn"
+        @click="authenticate($event)"
+        @keyup.enter="authenticate($event)"
+    >Sign in</button>
 
     <div class="button sign-up-button" @click="$router.push({name: 'sign-up'})">Sign up</div>
 
@@ -63,20 +69,29 @@ export default {
       })
     },
 
-    authenticate() {
+    authenticate($event) {
+
+      $event.preventDefault()
+      this.$refs.signinBtn.setAttribute('disabled', 'disabled')
+
       this.$store.dispatch('login')
-      login(this.$data.authForm)
-          .then((res) => {
 
-            this.$store.commit("loginSuccess", res)
-
+      this.$awn.asyncBlock(
+          login(this.$data.authForm),
+          response => {
+            console.log(123)
+            this.$store.commit("loginSuccess", response)
+            this.$awn.success(`Login successful`)
             this.waitForLoad()
                 .then(res => this.$router.push({ name: 'apps' }))
-
-          })
-          .catch((error) => {
+          },
+          error => {
             this.$store.commit("loginFailed", {error})
-          });
+            this.$refs.signinBtn.removeAttribute('disabled')
+            this.authForm.password = ''
+            this.$awn.alert('Authorize error. Login or password is wrong')
+          }
+      )
     },
 
   }

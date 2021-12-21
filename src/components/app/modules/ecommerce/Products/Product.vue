@@ -374,7 +374,7 @@ export default {
           })
 
       if (index !== -1) {
-        this.notifier.warning('Error')
+        this.$awn.warning('Error')
         return false
       }
 
@@ -387,7 +387,7 @@ export default {
       let index = this._.findIndex(this.product.to_product, { id: store.id });
 
       if (index !== -1) {
-        this.notifier.warning('This store will be added')
+        this.$awn.warning('This store will be added')
         return false
       }
 
@@ -499,7 +499,7 @@ export default {
             if (res.data.success) {
               this.rebuildProduct(res.data)
             } else {
-              this.notifier.warning(res.data.error)
+              this.$awn.warning(res.data.error)
               this.$router.replace({ query: { tab: 'products' } })
               this.$parent.editProduct = false
             }
@@ -514,7 +514,7 @@ export default {
             }
           })
           .then((res) => {
-            this.notifier.success('Save data')
+            this.$awn.success('Save data')
             this.$nextTick(() => {
               this.activeForSave = false
             })

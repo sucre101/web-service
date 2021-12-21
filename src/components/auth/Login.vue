@@ -166,7 +166,7 @@ export default {
     register() {
 
       if (this.registerForm.password !== this.repeatPass) {
-        this.notifier.warning('Second password incorrect')
+        this.$awn.warning('Second password incorrect')
         return false;
       }
 

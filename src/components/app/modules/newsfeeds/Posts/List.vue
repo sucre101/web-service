@@ -79,9 +79,9 @@
         })
         .then(res => {
           if (res.data.message === "created"){
-            this.notifier.success('Post created successfully')
+            this.$awn.success('Post created successfully')
           }else{
-            this.notifier.success('Post updated successfully')
+            this.$awn.success('Post updated successfully')
           }
           this.postList = this._.cloneDeep(res.data.posts)
           this.showModal = false
@@ -96,15 +96,15 @@
         })
         .then(res => {
           if(res.data.success === true){
-            this.notifier.success('Post published successfully')
+            this.$awn.success('Post published successfully')
           }else {
-            this.notifier.warning('Post is not published')
+            this.$awn.warning('Post is not published')
           }
         })
       },
       deletePostConfirm(id){
         this.markedForDelete = id;
-        this.notifier.confirm('Are you sure?', this.deletePost())
+        this.$awn.confirm('Are you sure?', this.deletePost())
       },
       deletePost(){
         axios.post(`/${this.$route.params.folder.toLowerCase()}/${this.module.id}/post/delete`, {
@@ -112,7 +112,7 @@
         })
         .then(res => {
           this.postList = this._.cloneDeep(res.data.posts)
-          this.notifier.success('Post deleted successfully')
+          this.$awn.success('Post deleted successfully')
         })
       },
       setNull(){

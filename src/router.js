@@ -110,7 +110,7 @@ export default new VueRouter({
         },
         {
           path: 'settings',
-          name: 'settings',
+          name: 'app-settings',
           component: () => import('./components/app/settings/Index'),
           meta: {
             title: 'Settings'

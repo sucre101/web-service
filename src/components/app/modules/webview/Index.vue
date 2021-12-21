@@ -67,7 +67,7 @@ export default {
       axios.patch(`${moduleUrl(this.$route)}`, { src: this.mod.src} )
         .then((res) => {
           if (res.data.success) {
-            this.notifier.success('Saving data')
+            this.$awn.success('Saving data')
           }
         })
         .then(res => this.activeForSave = false)

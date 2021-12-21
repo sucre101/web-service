@@ -118,7 +118,7 @@
         .then(res => {
           this.blocks = this._.cloneDeep(res.data.blocks)
           this.setUndroppable()
-          this.notifier.success('Block\'s order changed successfully')
+          this.$awn.success('Block\'s order changed successfully')
         })
 
       },
@@ -151,9 +151,9 @@
             })
         .then(res => {
           if(res.data.success === true){
-            this.notifier.success('Block updated successfully')
+            this.$awn.success('Block updated successfully')
           }else{
-            this.notifier.success('Block not updated')
+            this.$awn.success('Block not updated')
           }
         })
       },
@@ -168,9 +168,9 @@
         })
         .then(res => {
           if (res.data.message === "created"){
-            this.notifier.success('Block created successfully')
+            this.$awn.success('Block created successfully')
           }else{
-            this.notifier.success('Block updated successfully')
+            this.$awn.success('Block updated successfully')
           }
           this.blocks = res.data.blocks
           this.setUndroppable()
@@ -180,7 +180,7 @@
       },
       deleteBlockConfirm(id){
         this.markedForDelete = id;
-        this.notifier.confirm('Are you sure?', this.deleteBlock())
+        this.$awn.confirm('Are you sure?', this.deleteBlock())
       },
       deleteBlock(){
         axios.post(`/${this.$route.params.folder.toLowerCase()}/post/${this.post.id}/block/delete`, {
@@ -189,7 +189,7 @@
         .then(res => {
           this.blocks = res.data.blocks
           this.setUndroppable()
-          this.notifier.success('Block deleted successfully')
+          this.$awn.success('Block deleted successfully')
         })
       },
     },

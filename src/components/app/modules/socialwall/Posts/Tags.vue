@@ -59,7 +59,7 @@
       },
       storeTag(){
         if (!this.tag.name){
-          this.notifier.warning('Tag name is empty');
+          this.$awn.warning('Tag name is empty');
           return false;
         }
         axios.post(`/${this.$route.params.folder.toLowerCase()}/${this.module.id}/post/addTag`, {
@@ -69,12 +69,12 @@
           this.tagList = this._.cloneDeep(res.data.tagList)
           this.tags = this._.cloneDeep(res.data.tags)
           this.tag.name = '';
-          this.notifier.success('Tag added successfully');
+          this.$awn.success('Tag added successfully');
         })
       },
       deleteTagConfirm(id){
         this.markedForDelete = id;
-        this.notifier.confirm('Are you sure?', this.deleteTag())
+        this.$awn.confirm('Are you sure?', this.deleteTag())
       },
       deleteTag(){
         axios.post(`/${this.$route.params.folder.toLowerCase()}/${this.module.id}/post/deleteTag`, {
@@ -84,7 +84,7 @@
         .then(res => {
           this.tagList = this._.cloneDeep(res.data.tagList)
           this.tags = this._.cloneDeep(res.data.tags)
-          this.notifier.success('Tag deleted successfully')
+          this.$awn.success('Tag deleted successfully')
         })
       },
     }

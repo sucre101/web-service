@@ -214,7 +214,7 @@
         })
         .then(res => {
           this.setBlocks(res.data.blocks)
-          this.notifier.success('Block\'s order changed successfully')
+          this.$awn.success('Block\'s order changed successfully')
         })
 
       },
@@ -225,7 +225,7 @@
         })
         .then(res => {
           this.setBlocks(res.data.blocks)
-          this.notifier.success('Block\'s order changed successfully')
+          this.$awn.success('Block\'s order changed successfully')
         })
       },
       openNewBlockModal(block){
@@ -266,28 +266,28 @@
       },
       deleteBlockConfirm(id){
         this.deleteIdBlock = id;
-        this.notifier.confirm('All blocks and elements in the row will be deleted. Are you sure?', this.deleteBlock())
+        this.$awn.confirm('All blocks and elements in the row will be deleted. Are you sure?', this.deleteBlock())
       },
       removeBlockConfirm(id){
         this.removeIdBlock = id;
-        this.notifier.confirm('All blocks and elements in the row will be in trash. Are you sure?', this.removeBlock())
+        this.$awn.confirm('All blocks and elements in the row will be in trash. Are you sure?', this.removeBlock())
       },
       restoreBlockConfirm(id){
         this.restoreIdBlock = id;
-        this.notifier.confirm('All blocks and elements in the row will restored. Are you sure?', this.restoreBlock())
+        this.$awn.confirm('All blocks and elements in the row will restored. Are you sure?', this.restoreBlock())
       },
       deleteElementConfirm(id, block_id){
         this.deleteIdElement = id;
         this.deleteIdBlock = block_id;
-        this.notifier.confirm('Are you sure?', this.deleteElement())
+        this.$awn.confirm('Are you sure?', this.deleteElement())
       },
       deleteSliderImageConfirm(id){
         this.deleteIdElement = id;
-        this.notifier.confirm('Are you sure?', this.deleteSliderImage())
+        this.$awn.confirm('Are you sure?', this.deleteSliderImage())
       },
       deleteTemplateConfirm(id){
         this.deleteIdTemplate = id;
-        this.notifier.confirm('Are you sure?', this.deleteTemplate())
+        this.$awn.confirm('Are you sure?', this.deleteTemplate())
       },
       storeBlock(block){
         axios.post(`/${this.$route.params.folder.toLowerCase()}/block/store`,{
@@ -296,9 +296,9 @@
         .then(res => {
           if(res.data.success === true){
             this.setBlocks(res.data.blocks)
-            this.notifier.success('Block created successfully')
+            this.$awn.success('Block created successfully')
           }else{
-            this.notifier.warning('Error')
+            this.$awn.warning('Error')
           }
           this.$refs.blockModal.close()
           this.setNull();
@@ -312,9 +312,9 @@
         .then(res => {
           if(res.data.success === true){
             this.setBlocks(res.data.blocks)
-            this.notifier.success('Block updated successfully')
+            this.$awn.success('Block updated successfully')
           }else{
-            this.notifier.warning('Error')
+            this.$awn.warning('Error')
           }
           this.$refs.blockModal.close()
           this.setNull();
@@ -355,11 +355,11 @@
               this.blocks[index].elements.push(res.data.element)
             }
           }else{
-            this.notifier.warning('Error')
+            this.$awn.warning('Error')
             return false;
           }
         }).then(() => {
-          this.notifier.success('Element created successfully')
+          this.$awn.success('Element created successfully')
           this.$refs.elementModal.close()
           this.showElementModal = false;
           this.setNull();
@@ -401,11 +401,11 @@
               this.blocks[index].elements = res.data.elements
             }
           }else{
-            this.notifier.warning('Error')
+            this.$awn.warning('Error')
             return false;
           }
         }).then(() => {
-          this.notifier.success('Element updated successfully')
+          this.$awn.success('Element updated successfully')
           this.$refs.elementModal.close()
           this.showElementModal = false;
           this.setNull();
@@ -423,9 +423,9 @@
         .then(res => {
           if(res.data.success === true){
             this.templates = res.data.templates
-            this.notifier.success('Template created successfully')
+            this.$awn.success('Template created successfully')
           }else{
-            this.notifier.warning('Error')
+            this.$awn.warning('Error')
           }
         });
 
@@ -441,9 +441,9 @@
         .then(res => {
           if(res.data.success === true){
             this.templates = res.data.templates
-            this.notifier.success('Template updated successfully')
+            this.$awn.success('Template updated successfully')
           }else{
-            this.notifier.warning('Error')
+            this.$awn.warning('Error')
           }
         });
 
@@ -455,11 +455,11 @@
         })
         .then(res => {
           if(res.data.success === true){
-            this.notifier.success('Block deleted successfully')
+            this.$awn.success('Block deleted successfully')
             this.setBlocks(res.data.blocks)
 
           }else{
-            this.notifier.warning('Error')
+            this.$awn.warning('Error')
           }
         });
         this.setNull();
@@ -470,11 +470,11 @@
         })
         .then(res => {
           if(res.data.success === true){
-            this.notifier.success('Block removed successfully')
+            this.$awn.success('Block removed successfully')
             this.setBlocks(res.data.blocks)
 
           }else{
-            this.notifier.warning('Error')
+            this.$awn.warning('Error')
           }
         });
         this.setNull();
@@ -485,11 +485,11 @@
         })
         .then(res => {
           if(res.data.success === true){
-            this.notifier.success('Block restored successfully')
+            this.$awn.success('Block restored successfully')
             this.setBlocks(res.data.blocks);
 
           }else{
-            this.notifier.warning('Error')
+            this.$awn.warning('Error')
           }
         });
         this.setNull();
@@ -504,11 +504,11 @@
         })
         .then(res => {
           if(res.data.success === true){
-            this.notifier.success('Element deleted successfully')
+            this.$awn.success('Element deleted successfully')
             this.blocks[index].elements = res.data.elements
 
           }else{
-            this.notifier.warning('Error')
+            this.$awn.warning('Error')
           }
         });
         this.setNull();
@@ -523,11 +523,11 @@
         })
         .then(res => {
           if(res.data.success === true){
-            this.notifier.success('Slider image deleted successfully')
+            this.$awn.success('Slider image deleted successfully')
             this.blocks[index].elements = res.data.elements
 
           }else{
-            this.notifier.warning('Error')
+            this.$awn.warning('Error')
           }
           this.deleteIdElement = null
         });
@@ -538,10 +538,10 @@
         })
         .then(res => {
           if(res.data.success === true){
-            this.notifier.success('Template deleted successfully')
+            this.$awn.success('Template deleted successfully')
             this.templates = res.data.templates
           }else{
-            this.notifier.warning('Error')
+            this.$awn.warning('Error')
           }
         });
         this.setNull();

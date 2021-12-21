@@ -218,7 +218,7 @@ export default {
     _saveChanges() {
       axios.patch(`${moduleUrl(this.$route)}/category/${this.category.id}`, this.category)
         .then((res) => {
-          this.notifier.success('Category save')
+          this.$awn.success('Category save')
         })
     },
 

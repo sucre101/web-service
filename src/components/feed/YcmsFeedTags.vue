@@ -47,14 +47,14 @@
           tag: this.newTag
         })
         .then(res => {
-          this.notifier.success('Tag added successfully');
+          this.$awn.success('Tag added successfully');
           this.tags = res.data.tags;
           this.newTag.name = '';
         })
       },
       deleteTagConfirm(id){
         this.markedForDelete = id;
-        this.notifier.confirm('Are you sure?', this.deleteTag())
+        this.$awn.confirm('Are you sure?', this.deleteTag())
       },
       deleteTag(){
         axios.post('/app/'+ this.app.slug +'/feed/tag/delete', {
@@ -62,7 +62,7 @@
         })
         .then(res => {
           this.tags = res.data.tags
-          this.notifier.success('Tag deleted successfully')
+          this.$awn.success('Tag deleted successfully')
         })
       },
     },

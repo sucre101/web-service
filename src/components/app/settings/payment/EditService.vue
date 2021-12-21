@@ -90,7 +90,7 @@ export default {
       axios.patch(`/${this.slug}/payment/${this.serviceId}`, {fields: this.fields, label: this.service.label})
         .then((res) => {
           if (res.data.success) {
-            this.notifier.success('Saving Data')
+            this.$awn.success('Saving Data')
             this.activeForSave = false
           }
         })

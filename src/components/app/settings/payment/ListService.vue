@@ -55,13 +55,13 @@ export default {
       })
 
       if ($event.value === false && !$filterActive.length) {
-        this.notifier.success('ajskldjaslda')
+        this.$awn.success('ajskldjaslda')
         service.active = !$event.value
         return false
       }
 
       if ($event.value === true && $filterActive.length) {
-        this.notifier.success('1323')
+        this.$awn.success('1323')
         this.$set(service, 'active', !$event.value)
         return false
       }

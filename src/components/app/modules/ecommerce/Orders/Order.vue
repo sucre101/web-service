@@ -163,7 +163,7 @@ export default {
     _saveOrder() {
       axios.patch(`${moduleUrl(this.$route)}/order/${this.order.id}`, this.order)
         .then((res) => {
-          this.notifier.success('Order save')
+          this.$awn.success('Order save')
         })
         .then(res => this.activeForSave = false)
     },

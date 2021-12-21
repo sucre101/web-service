@@ -48,7 +48,7 @@ export default {
             this.showSave = true
 
           } else {
-            this.notifier.alert('Stripe Service ' + res.data.error)
+            this.$awn.alert('Stripe Service ' + res.data.error)
           }
 
         })

@@ -47,7 +47,7 @@
       },
       deletePageConfirm(id){
         this.markedForDelete = id;
-        this.notifier.confirm('Are you sure?', this.deletePage())
+        this.$awn.confirm('Are you sure?', this.deletePage())
       },
       storePage(){
         axios.post('/app/' + this.app.slug + '/page-builder/store', {
@@ -55,11 +55,11 @@
         })
         .then(res => {
           if(res.data.success === true){
-            this.notifier.success('Page created successfully')
+            this.$awn.success('Page created successfully')
             this.pages = res.data.pages
             this.newPage = '';
           }else{
-            this.notifier.success('Error')
+            this.$awn.success('Error')
           }
           this.$refs.newPageModal.close()
         })
@@ -70,11 +70,11 @@
         })
         .then(res => {
           if(res.data.success === true){
-            this.notifier.success('Page deleted successfully')
+            this.$awn.success('Page deleted successfully')
             this.pages = res.data.pages
             this.newPage = '';
           }else{
-            this.notifier.success('Error')
+            this.$awn.success('Error')
           }
         })
       },

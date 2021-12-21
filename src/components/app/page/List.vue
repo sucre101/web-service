@@ -129,7 +129,7 @@ export default {
           console.log(res)
         })
 
-      this.notifier.async(promise, 'All pages updated')
+      this.$awn.async(promise, 'All pages updated')
     },
 
     _createPage() {
@@ -139,7 +139,7 @@ export default {
         })
         .then(res => this.$refs.createPage.close())
 
-      // this.notifier.async(promise, 'New page is created')
+      // this.$awn.async(promise, 'New page is created')
     },
 
     _loadPages() {
@@ -155,7 +155,7 @@ export default {
           this.pages = [...res.data.pages]
         })
 
-      this.notifier.async(promise, 'Page deleted')
+      this.$awn.async(promise, 'Page deleted')
     }
 
   }

@@ -193,7 +193,7 @@ export default {
     },
 
     changeStoreStructure(val) {
-      this.notifier.warning('This function will be in the future')
+      this.$awn.warning('This function will be in the future')
     },
 
     prepareSendData() {
@@ -230,7 +230,7 @@ export default {
         .then((res) => {
           if (res.data.success) {
             this.activeForSave = false
-            this.notifier.success('Save changes')
+            this.$awn.success('Save changes')
           }
         })
     },

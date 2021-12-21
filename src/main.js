@@ -23,10 +23,13 @@ Vue.config.devtools = true;
 window.axios = axios
 axios.defaults.baseURL = process.env.VUE_APP_URL
 
-let notifierOptions = {
-  position: 'top-right'
+let $awnOptions = {
+  position: 'top-right',
+  messages: {
+    "async-block": "We are trying to authorize you",
+  }
 }
-Vue.prototype.notifier = new AWN(notifierOptions)
+Vue.prototype.$awn = new AWN($awnOptions)
 
 Vue.prototype.locStor = new YcmsLocalStorage
 

@@ -98,7 +98,7 @@ export default {
       axios.post(`${moduleUrl(this.$route)}`, this.modules)
         .then((res) => {
           if (res.data.success) {
-            this.notifier.success('Save data')
+            this.$awn.success('Save data')
           }
         })
         .then(res => this.activeForSave = false)

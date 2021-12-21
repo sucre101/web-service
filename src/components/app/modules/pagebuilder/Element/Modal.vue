@@ -158,7 +158,7 @@
       },
       deleteSliderImageConfirm(id){
         this.deleteIdElement = id;
-        this.notifier.confirm('Are you sure?', this.deleteSliderImage())
+        this.$awn.confirm('Are you sure?', this.deleteSliderImage())
       },
       deleteSliderImage(){
         axios.post('/app/'+ this.slug +'/page-builder/element/delete_image', {
@@ -166,10 +166,10 @@
         })
         .then(res => {
           if(res.data.success === true){
-            notifier.success('Slider image deleted successfully')
+            $awn.success('Slider image deleted successfully')
             this.element_.images = res.data.images
           }else{
-            this.notifier.success('Error')
+            this.$awn.success('Error')
           }
           this.deleteIdElement = null
         });

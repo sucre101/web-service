@@ -58,7 +58,7 @@
         })
         .then(res => {
           if(res.data.success === true){
-            this.notifier.success('Post published successfully')
+            this.$awn.success('Post published successfully')
           }
         })
       },
@@ -75,9 +75,9 @@
         })
         .then(res => {
           if (res.data.message === "created"){
-            this.notifier.success('Post created successfully')
+            this.$awn.success('Post created successfully')
           }else{
-            this.notifier.success('Post updated successfully')
+            this.$awn.success('Post updated successfully')
           }
           this.posts = res.data.posts
 
@@ -92,7 +92,7 @@
       },
       deletePostConfirm(id){
         this.markedForDelete = id;
-        this.notifier.confirm('Are you sure?', this.deletePost())
+        this.$awn.confirm('Are you sure?', this.deletePost())
       },
       deletePost(){
         let index = this.posts.map(x => {
@@ -104,7 +104,7 @@
         })
         .then(res => {
           this.posts.splice(index, 1)
-          this.notifier.success('Post deleted successfully')
+          this.$awn.success('Post deleted successfully')
         })
       },
     },

@@ -55,7 +55,7 @@
             document.body.appendChild(link);
             link.click()
           } else {
-            this.notifier.warning(res.data.message)
+            this.$awn.warning(res.data.message)
           }
 
         })

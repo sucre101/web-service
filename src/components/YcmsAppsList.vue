@@ -196,7 +196,7 @@
             },
             showDeleteWarning(app){
                 this.appToDelete = app
-                this.notifier.confirm('Are you sure?', this.deleteApp)
+                this.$awn.confirm('Are you sure?', this.deleteApp)
             },
             deleteApp() {
                 post('/app/delete', {

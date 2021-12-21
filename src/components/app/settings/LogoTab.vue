@@ -130,7 +130,7 @@ export default {
 
           if (res.data.success) {
             this.$store.commit('updateAppIconSettings', JSON.stringify(res.data.settings))
-            this.notifier.success('Save data')
+            this.$awn.success('Save data')
           }
 
         })

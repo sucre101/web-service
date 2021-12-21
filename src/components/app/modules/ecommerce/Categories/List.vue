@@ -103,7 +103,7 @@ export default {
       axios.patch(`${moduleUrl(this.$route)}/category`, this.changed)
         .then((res) => {
           if (res.data.success) {
-            this.notifier.success('Categories save')
+            this.$awn.success('Categories save')
           }
         })
         .then( res => this.activeForSave = false )

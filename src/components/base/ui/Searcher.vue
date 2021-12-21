@@ -43,7 +43,7 @@ export default {
     search() {
 
       if (this.query === null) {
-        this.notifier.warning('Enter your query')
+        this.$awn.warning('Enter your query')
         return false;
       }
 

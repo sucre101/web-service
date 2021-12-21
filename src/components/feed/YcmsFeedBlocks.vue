@@ -95,7 +95,7 @@
         })
         .then(res => {
           if(res.data.success === true){
-            this.notifier.success('Post published successfully')
+            this.$awn.success('Post published successfully')
           }
         })
       },
@@ -114,7 +114,7 @@
         .then(res => {
           this.blocks = res.data.blocks
           this.setUndroppable()
-          this.notifier.success('Block\'s order changed successfully')
+          this.$awn.success('Block\'s order changed successfully')
         })
 
       },
@@ -133,7 +133,7 @@
           })
           .then(res => {
             console.log(res)
-            this.notifier.success('Block added successfully')
+            this.$awn.success('Block added successfully')
           })
         }
       },
@@ -158,9 +158,9 @@
             })
         .then(res => {
           if(res.data.success === true){
-            this.notifier.success('Block updated successfully')
+            this.$awn.success('Block updated successfully')
           }else{
-            this.notifier.success('Block not updated')
+            this.$awn.success('Block not updated')
           }
         })
       },
@@ -175,9 +175,9 @@
         })
         .then(res => {
           if (res.data.message === "created"){
-            this.notifier.success('Block created successfully')
+            this.$awn.success('Block created successfully')
           }else{
-            this.notifier.success('Block updated successfully')
+            this.$awn.success('Block updated successfully')
           }
           this.blocks = res.data.blocks
           this.setUndroppable()
@@ -187,7 +187,7 @@
       },
       deleteBlockConfirm(id){
         this.markedForDelete = id;
-        this.notifier.confirm('Are you sure?', this.deleteBlock())
+        this.$awn.confirm('Are you sure?', this.deleteBlock())
       },
       deleteBlock(){
         axios.post('/app/'+ this.app.slug +'/feed/block/delete', {
@@ -196,7 +196,7 @@
         .then(res => {
           this.blocks = res.data.blocks
           this.setUndroppable()
-          this.notifier.success('Block deleted successfully')
+          this.$awn.success('Block deleted successfully')
         })
       },
     },

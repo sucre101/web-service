@@ -280,7 +280,7 @@
         })
         .then(res => {
           this.setBlocks(res.data.blocks)
-          this.notifier.success('Block\'s order changed successfully')
+          this.$awn.success('Block\'s order changed successfully')
         })
 
       },
@@ -291,7 +291,7 @@
         })
         .then(res => {
           this.setBlocks(res.data.blocks)
-          this.notifier.success('Block\'s order changed successfully')
+          this.$awn.success('Block\'s order changed successfully')
         })
 
       },
@@ -333,11 +333,11 @@
       },
       deleteBlockConfirm(id){
         this.deleteIdBlock = id;
-        this.notifier.confirm('All blocks and elements in the row will be deleted. Are you sure?', this.deleteBlock())
+        this.$awn.confirm('All blocks and elements in the row will be deleted. Are you sure?', this.deleteBlock())
       },
       deleteElementConfirm(id){
         this.deleteIdElement = id;
-        this.notifier.confirm('Are you sure?', this.deleteElement())
+        this.$awn.confirm('Are you sure?', this.deleteElement())
       },
       goToStep(st, template){
         if (template){
@@ -363,9 +363,9 @@
         .then(res => {
           if(res.data.success === true){
             this.setBlocks(res.data.blocks)
-            this.notifier.success('Block created successfully')
+            this.$awn.success('Block created successfully')
           }else{
-            this.notifier.success('Error')
+            this.$awn.success('Error')
           }
           this.$refs.blockModal.close()
           this.setNull();
@@ -382,9 +382,9 @@
         .then(res => {
           if(res.data.success === true){
             this.setBlocks(res.data.blocks)
-            this.notifier.success('Block updated successfully')
+            this.$awn.success('Block updated successfully')
           }else{
-            this.notifier.success('Error')
+            this.$awn.success('Error')
           }
           this.$refs.blockModal.close()
           this.setNull();
@@ -408,9 +408,9 @@
         .then(res => {
           if(res.data.success === true){
             this.blocks[index].elements = res.data.elements
-            this.notifier.success('Element created successfully')
+            this.$awn.success('Element created successfully')
           }else{
-            this.notifier.success('Error')
+            this.$awn.success('Error')
           }
           this.$refs.elementModal.close()
           this.setNull();
@@ -435,9 +435,9 @@
         .then(res => {
           if(res.data.success === true){
             this.blocks[index].elements = res.data.elements
-            this.notifier.success('Element updated successfully')
+            this.$awn.success('Element updated successfully')
           }else{
-            this.notifier.success('Error')
+            this.$awn.success('Error')
           }
           this.$refs.elementModal.close()
           this.setNull();
@@ -452,9 +452,9 @@
         .then(res => {
           if(res.data.success === true){
             this.templates = res.data.templates
-            this.notifier.success('Template created successfully')
+            this.$awn.success('Template created successfully')
           }else{
-            this.notifier.success('Error')
+            this.$awn.success('Error')
           }
           this.closeTemplateModal()
         });
@@ -468,9 +468,9 @@
         .then(res => {
           if(res.data.success === true){
             this.templates = res.data.templates
-            this.notifier.success('Template updated successfully')
+            this.$awn.success('Template updated successfully')
           }else{
-            this.notifier.success('Error')
+            this.$awn.success('Error')
           }
           this.closeTemplateModal()
         });
@@ -481,11 +481,11 @@
         })
         .then(res => {
           if(res.data.success === true){
-            this.notifier.success('Block deleted successfully')
+            this.$awn.success('Block deleted successfully')
             this.setBlocks(res.data.blocks)
             this.newPage = '';
           }else{
-            this.notifier.success('Error')
+            this.$awn.success('Error')
           }
         });
         this.setNull();
@@ -496,11 +496,11 @@
         })
         .then(res => {
           if(res.data.success === true){
-            this.notifier.success('Element deleted successfully')
+            this.$awn.success('Element deleted successfully')
             this.blocks = res.data.blocks
             this.newPage = '';
           }else{
-            this.notifier.success('Error')
+            this.$awn.success('Error')
           }
         });
         this.setNull();

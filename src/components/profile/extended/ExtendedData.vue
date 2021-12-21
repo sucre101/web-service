@@ -227,7 +227,7 @@ export default {
         let _this = input[0]
 
         if (_this.value === '' || _this.value === null) {
-          this.notifier.warning('fill input')
+          this.$awn.warning('fill input')
           return false
         }
 

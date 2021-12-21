@@ -42,7 +42,7 @@ export default {
     submit() {
       this.$emit('complete', this.form.bind)
       let promise = axios.post(`woocommerce/${this.$parent.moduleId}/${this.form.postUrl}`, this.form.bind)
-      this.notifier.async(promise, 'Successful')
+      this.$awn.async(promise, 'Successful')
     }
   }
 }

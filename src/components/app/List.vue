@@ -41,25 +41,11 @@ export default {
       modules: this.modulesList,
       appToDelete: null,
       appName: null,
-      homePageModule: null,
-      // menuTemplate: null,
-      awaitingIcon: {},
-      debug: true,
       step: 1,
       appsList: [],
       modulesList: [],
       appsCount: false,
       // isEmployee: this.$store.getters.isEmployee
-    }
-  },
-
-  props: {},
-
-  watch: {
-    step(val) {
-      if (val === 3) {
-        return this.createApp()
-      }
     }
   },
 
@@ -77,17 +63,23 @@ export default {
     createApp() {
       this.validate()
         .then(res => {
-          axios.put('/apps', {appName: this.appName})
-            .then((res) => {
-              if (res.data.success) {
-                this.appName = ''
-                this.$root.$emit('apps::refresh', res.data.app)
-              }
-            })
+          this.$awn.async(
+              axios.put('/apps', {appName: this.appName}),
+              response => {
+                if (response.data.success) {
+                  this.appName = ''
+                  this.$root.$emit('apps::refresh', response.data.app)
+                  this.$awn.success(`Application added ${response.data.app.name}`)
+                } else {
+                  this.$awn.alert(response.data.error)
+                }
+              },
+              ''
+          )
         })
         .catch(err => {
           this.appName = ''
-          this.notifier.warning('Application name must be like this `apple.app`')
+          this.$awn.warning('Application name must be like this `apple.app`')
         })
     },
 
@@ -105,7 +97,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 
 .apps-list {
   display: flex;
