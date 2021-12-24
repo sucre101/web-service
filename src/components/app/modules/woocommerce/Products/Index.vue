@@ -11,30 +11,16 @@
 
 import List from "./List";
 import Product from "./Product";
+import baseHook from "../baseHook";
 
 export default {
   name: 'index',
   title: 'products',
+  mixins: [baseHook],
   components: {
     'product-list': List,
     'product': Product,
   },
-
-  data() {
-    return {
-      loading: false,
-      edit: false,
-    }
-  },
-
-  created() {
-    this.edit = this.$route.query.hasOwnProperty('product')
-    this.$root.$emit('woo::load', true)
-  },
-
-  updated() {
-    this.$root.$emit('woo::load', true)
-  }
 }
 </script>
 

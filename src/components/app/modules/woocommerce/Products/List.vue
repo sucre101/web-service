@@ -18,11 +18,11 @@
 
 <script>
 import {objFilterToUrlParams} from "../helpers"
-import mixins from "../mixins";
+import methods from "../methods";
 
 export default {
   name: "list",
-  mixins: [mixins],
+  mixins: [methods],
   data() {
     return {
       products: [],

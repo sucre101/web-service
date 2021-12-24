@@ -9,29 +9,16 @@
 <script>
 import List from "./List";
 import Category from "./Category";
+import baseHook from "../baseHook";
 
 export default {
   name: 'index',
   title: 'categories',
+  mixins: [baseHook],
   components: {
     'categories-list': List,
     'category': Category,
   },
-
-  data() {
-    return {
-      edit: false,
-    }
-  },
-
-  created() {
-    this.edit = this.$route.query.hasOwnProperty('category')
-    this.$root.$emit('woo::load', true)
-  },
-
-  updated() {
-    this.$root.$emit('woo::load', true)
-  }
 }
 </script>
 

@@ -12,11 +12,11 @@
 </template>
 
 <script>
-import mixins from "../mixins";
+import methods from "../methods";
 
 export default {
   name: "list",
-  mixins: [mixins],
+  mixins: [methods],
   data() {
     return {
 
@@ -27,15 +27,7 @@ export default {
     this._loadList(`woocommerce/${this.$parent.$parent.moduleId}/products/attributes`)
   },
 
-  methods: {
-    // _load() {
-    //   WOO.request(`woocommerce/${this.$parent.$parent.moduleId}/products/attributes`, 'GET')
-    //     .then((res) => {
-    //       this.items = this._.cloneDeep(res.attributes)
-    //     })
-    //     .then(res => this.$root.$emit('woo::load', false))
-    // }
-  }
+  methods: {}
 }
 </script>
 

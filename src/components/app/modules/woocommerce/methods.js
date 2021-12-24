@@ -18,7 +18,8 @@ export default {
 					.then((res) => {
 						this.list = this._.cloneDeep(res.list)
 					})
-					.then(res => this.$root.$emit('woo::load', false))
+					.then(res => this.$root.$emit('loading', false))
+					.then(res => resolve())
 			})
 		},
 
@@ -33,14 +34,18 @@ export default {
 						}
 					})
 					.then(r => resolve(this.item ? this.item : this.allData))
-					.then(res => this.$root.$emit('woo::load', false))
+					.then(res => this.$root.$emit('loading', false))
 			})
 		},
 
 		_removeItem(url) {
+			this.$root.$emit('loading', true)
 			return new Promise(resolve => {
 				wooMemory.request(url, 'DELETE')
-					.then(r => resolve(r))
+					.then((res) => {
+						resolve(res)
+					})
+					.then(res => this.$root.$emit('loading', false))
 			})
 		},
 
@@ -52,11 +57,13 @@ export default {
 		},
 
 		_updateItem(url, data) {
+			this.$root.$emit('loading', true)
 			return new Promise(resolve => {
 				wooMemory.request(url, 'PATCH', data)
 					.then((res) => {
 						resolve(res)
 					})
+					.then(res => this.$root.$emit('loading', false))
 			})
 		}
 	}

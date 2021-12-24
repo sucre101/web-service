@@ -44,14 +44,14 @@
     <div v-if="app.slug && $route.name !== 'apps'" class="link-list">
       <span class="title">App Manager</span>
 
-      <router-link :to="{ name: 'page-list', params: { slug: current.slug } }" tag="a" >
-        <div class="menu-entry">
-          <div class="icon-container">
-            <img src="~@/assets/img/pages.png">
-          </div>
-          <span>All pages</span>
-        </div>
-      </router-link>
+<!--      <router-link :to="{ name: 'page-list', params: { slug: current.slug } }" tag="a" >-->
+<!--        <div class="menu-entry">-->
+<!--          <div class="icon-container">-->
+<!--            <img src="~@/assets/img/pages.png">-->
+<!--          </div>-->
+<!--          <span>All pages</span>-->
+<!--        </div>-->
+<!--      </router-link>-->
 
       <router-link :to="{ name: 'module-list', params: { slug: current.slug } }" tag="a" >
         <div class="menu-entry">

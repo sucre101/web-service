@@ -200,7 +200,7 @@ import ClassicEditor from "@ckeditor/ckeditor5-build-classic"
 import vueCustomScrollbar from 'vue-custom-scrollbar'
 import "vue-custom-scrollbar/dist/vueScrollbar.css"
 import {product as PROD} from "../helpers"
-import mixins from "../mixins"
+import mixins from "../methods"
 
 export default {
   name: "product",
@@ -253,7 +253,7 @@ export default {
   watch: {
     $route(to, from) {
       if (!to.query.hasOwnProperty(this.$options.name)) {
-        this.$parent.editProduct = false
+        this.$parent.edit = false
       }
     },
 
@@ -282,15 +282,6 @@ export default {
         .then((res) => {
           console.log(res)
         })
-
-      // WOO.request(
-      //     `woocommerce/${this.$parent.$parent.moduleId}/products/${this.productId}`,
-      //     'PATCH',
-      //     this.product)
-      //   .then((res) => {
-      //     this.holder = false
-      //     this.memory = this._.cloneDeep(this.product)
-      //   })
     },
 
     addAttribute() {

@@ -111,14 +111,21 @@ export default {
     },
 
     buildApplication() {
+      axios.defaults.baseURL = this.$root.nodeUrl
 
-      compile()
-        .then((res) => {
-          new AWN().async(
-              axios.get(`http://localhost:4000/${res.user_folder}/${res.app_folder}`),
-              'Build complete',
-          )
-        })
+      console.log(this.$root.nodeUrl)
+      new AWN().async(
+          axios.get('/build/alex1/com.node.app'),
+          'Build complete',
+      )
+
+      // compile()
+      //   .then((res) => {
+      //     new AWN().async(
+      //         axios.get(`http://localhost:4000/${res.user_folder}/${res.app_folder}`),
+      //         'Build complete',
+      //     )
+      //   })
       // compile('com.welcome.app', 'welcome.app')
       //   .then((res) => {
       //     console.log(res)

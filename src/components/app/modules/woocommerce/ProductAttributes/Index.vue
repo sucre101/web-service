@@ -1,8 +1,8 @@
 <template>
   <div>
-    <attribute-list v-if="!editAttribute" />
+    <attribute-list v-if="!edit" />
 
-    <product-attribute v-if="editAttribute"/>
+    <product-attribute v-if="edit"/>
   </div>
 </template>
 
@@ -21,17 +21,17 @@ export default {
 
   data() {
     return {
-      editAttribute: false,
+      edit: false,
     }
   },
 
   created() {
-    this.editAttribute = this.$route.query.hasOwnProperty('attribute')
-    this.$root.$emit('woo::load', true)
+    this.edit = this.$route.query.hasOwnProperty('attribute')
+    this.$root.$emit('loading', true)
   },
 
   updated() {
-    this.$root.$emit('woo::load', true)
+    this.$root.$emit('loading', true)
   }
 }
 </script>

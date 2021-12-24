@@ -41,7 +41,7 @@
 
         <div class="module-block future-module">
           <div class="icon">
-            <img src="http://api.ycms/img/modules/Sales.module.png">
+            <img :src="`${$root.baseUrl}/img/modules/Sales.module.png`">
           </div>
           <div class="description">
             <div class="name">AR-Wiki</div>
@@ -64,7 +64,7 @@
 
         <div class="module-block future-module">
           <div class="icon">
-            <img src="http://api.ycms/img/modules/Sales.module.png">
+            <img :src="`${$root.baseUrl}/img/modules/Sales.module.png`">
           </div>
           <div class="description">
             <div class="name">Voice-bot</div>
@@ -87,7 +87,7 @@
 
         <div class="module-block future-module">
           <div class="icon">
-            <img src="http://api.ycms/img/modules/Sales.module.png">
+            <img :src="`${$root.baseUrl}/img/modules/Sales.module.png`">
           </div>
           <div class="description">
             <div class="name">Form-builder</div>
@@ -169,13 +169,20 @@ export default {
     },
 
     _addModule($id) {
-      axios.post('add-module', { moduleId: $id })
-        .then((res) => {
-          if (res.data.success) {
-            // TODO: Add logic with adding module to sidebar menu
-            console.log('do you want add module to sidebar')
+
+      this.$awn.async(
+          axios.post('add-module', { moduleId: $id }),
+          response => {
+            if (response.data.success) {
+              // TODO: Add logic with adding module to sidebar menu
+              console.log('do you want add module to sidebar')
+              this.$awn.success('Module installed')
+            }
+          },
+          error => {
+            this.$awn.alert('Something going wrong')
           }
-        })
+      )
     },
 
     _removeModule($id) {

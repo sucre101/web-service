@@ -117,19 +117,6 @@ let wooMemory = {
 	}
 }
 
-const pushItem = (url, data) => {
-	return new Promise((resolve, reject) => {
-		axios.post(url, data)
-			.then((res) => {
-				if (res.data.success) {
-					resolve(res.data)
-				} else {
-					reject()
-				}
-			})
-	})
-}
-
 
 module.exports = {
 	modulePages,
@@ -137,6 +124,5 @@ module.exports = {
 	baseFilters,
 	wooMemory,
 	product,
-	pushItem,
 	formFieldsForCreate
 }
