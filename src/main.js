@@ -104,7 +104,7 @@ new Vue({
     pageTitle: null,
     openManager: false,
     baseUrl: process.env.VUE_APP_URI,
-    nodeUrl: 'http://node.yappix.io:4000',
+    nodeUrl: process.env.VUE_APP_NODE,
     enableDarkTheme: false,
     loading: false,
   },

@@ -71,14 +71,14 @@
         </div>
       </router-link>
 
-      <router-link :to="{ name: 'users' }" tag="a" v-if="Number(user.role) === 1">
-        <div class="menu-entry">
-          <div class="icon-container">
-            <img src="@/assets/img/users.png">
-          </div>
-          <span>Users & Roles</span>
-        </div>
-      </router-link>
+<!--      <router-link :to="{ name: 'users' }" tag="a" v-if="Number(user.role) === 1">-->
+<!--        <div class="menu-entry">-->
+<!--          <div class="icon-container">-->
+<!--            <img src="@/assets/img/users.png">-->
+<!--          </div>-->
+<!--          <span>Users & Roles</span>-->
+<!--        </div>-->
+<!--      </router-link>-->
 
     </div>
 
@@ -103,7 +103,7 @@
       <div class="divider"></div>
     </template>
 
-    <router-link :to="{ name: 'settings' }" tag="a">
+    <router-link :to="{ name: 'app-settings' }" tag="a" v-if="$route.name !== 'apps'">
       <div class="menu-entry">
         <div class="icon-container">
           <img src="@/assets/img/settings.png">
@@ -129,7 +129,7 @@ export default {
   data() {
     return {
       act: false,
-      appsList: [],
+      appsList: localStorage.getItem('m.apps') ? JSON.parse(localStorage.getItem('m.apps')) : [],
       current: {}
     }
   },
@@ -140,7 +140,7 @@ export default {
         this._getApps()
         swapSidebar(false)
       } else {
-        this.appsList = []
+        this.appsList = localStorage.getItem('m.apps') ? JSON.parse(localStorage.getItem('m.apps')) : []
       }
     }
   },
@@ -172,9 +172,15 @@ export default {
 
     _getApps() {
 
+      if (this.appsList.length) {
+        this.$root.$emit('loading', false)
+        return
+      }
+
       axios.get('apps')
         .then((res) => {
           this.appsList = [...res.data.apps]
+          localStorage.setItem('m.apps', JSON.stringify(this.appsList))
         })
         .then(res => this.$root.$emit('loading', false))
 

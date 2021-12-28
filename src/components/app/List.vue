@@ -10,12 +10,41 @@
         <h4>Creating new application</h4>
       </div>
       <div class="main">
-        <span>Please enter full informations below</span>
 
-        <div class="input-group">
-          <label>
-            <input type="text" placeholder="example: appname.app" class="y-input-text" v-model="appName">
-          </label>
+        <div>
+          <span>Please enter full informations below</span>
+
+          <div class="input-group">
+            <label>
+              <input type="text" placeholder="example: appname.app" class="y-input-text" v-model="appModel.name">
+            </label>
+          </div>
+
+          <div class="input-group">
+            <span>Icon</span>
+            <div @dragover.prevent @drop.prevent @click="$refs.icon.click()">
+              <input type="file" @change="uploadFile" ref="icon" class="file_input"/>
+              <div @drop="dragFile" class="drop-block">
+                <img src="@/assets/img/group-folder.png">
+                Select or Drop your files here
+              </div>
+            </div>
+            <div class="notify">
+              <span v-if="!rFile.length" class="warning">
+                <i class="fas fa-exclamation-circle"></i>
+                Not file selected
+              </span>
+              <span v-else class="done">
+                <i class="fas fa-check"></i>
+                File selected
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <span>Description</span>
+          <textarea placeholder="Type something..." v-model.trim="appModel.description"></textarea>
         </div>
 
       </div>
@@ -27,6 +56,10 @@
 <script>
 import YcmsImageUploader from "../YcmsImageUploader"
 import Tooltip from '../../components/base/ui/Tooltip'
+import {mapGetters} from "vuex";
+
+const WIDTH = 1024;
+const HEIGHT = 1024;
 
 export default {
 
@@ -40,13 +73,22 @@ export default {
       apps: [],
       modules: this.modulesList,
       appToDelete: null,
-      appName: null,
+      appModel: {},
       step: 1,
       appsList: [],
       modulesList: [],
       appsCount: false,
-      // isEmployee: this.$store.getters.isEmployee
+      rFile: [],
+      image:{
+        size:'',
+        height:'',
+        width:''
+      },
     }
+  },
+
+  computed: {
+    ...mapGetters(['currentUser'])
   },
 
   created() {
@@ -61,15 +103,22 @@ export default {
   methods: {
 
     createApp() {
+
+      let form = new FormData()
+      form.append('file', this.$refs.icon.files[0])
+      form.append('name', this.appModel.name)
+      form.append('description', this.appModel.description)
+
       this.validate()
-        .then(res => {
+        .then( res => {
           this.$awn.async(
-              axios.put('/apps', {appName: this.appName}),
+              axios.post('/apps', form, { headers: {'Content-Type': 'multipart/form-data'} }),
               response => {
                 if (response.data.success) {
-                  this.appName = ''
                   this.$root.$emit('apps::refresh', response.data.app)
                   this.$awn.success(`Application added ${response.data.app.name}`)
+                  this.appModel = {}
+                  this.rFile = []
                 } else {
                   this.$awn.alert(response.data.error)
                 }
@@ -78,17 +127,48 @@ export default {
           )
         })
         .catch(err => {
-          this.appName = ''
+          this.appModel = ''
           this.$awn.warning('Application name must be like this `apple.app`')
         })
     },
 
     validate() {
       return new Promise((res, rej) => {
-        let match = this.appName.split('.')
+        let match = this.appModel.name.split('.')
         if (match.length !== 2 && match[1] !== 'app') rej()
+        if (!this.$refs.icon.files.length) rej()
+
         res()
       })
+    },
+
+    validateIcon(file) {
+      let reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = evt => {
+        let img = new Image();
+        img.onload = () => {
+          this.image.width = img.width;
+          this.image.height = img.height;
+          if (this.image.width !== WIDTH && this.image.height !== HEIGHT) {
+            this.$awn.alert('Another resolution icon')
+            this.rFile = []
+            return
+          }
+        }
+        img.src = evt.target.result;
+      }
+    },
+
+
+    uploadFile(e) {
+      this.rFile = e.target.files;
+      this.validateIcon(this.rFile[0])
+    },
+
+    dragFile(e) {
+      this.rFile = e.target.files;
+      this.validateIcon(this.rFile[0])
     }
 
   }
@@ -97,7 +177,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+*:focus {
+  outline: 0;
+}
 .apps-list {
   display: flex;
   flex-direction: column;
@@ -144,15 +226,51 @@ export default {
       width: 100%;
       display: flex;
       padding: 10px 20px;
-      flex-direction: column;
+      flex-direction: row;
+      > div {
+        width: 40%;
+        display: flex;
+        flex-direction: column;
+        textarea {
+          border: none;
+          resize: none;
+          width: 100%;
+          height: 350px;
+        }
+        textarea::placeholder {
+          color: #c5cee0;
+        }
+      }
       span {
         color: #687c97;
         font-size: 15px;
         padding: 15px 0;
-        margin-bottom: 15px;
       }
       .input-group {
-        width: 35%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        label {
+          width: 70%;
+        }
+        span {
+          color: #687c97;
+          font-size: 15px;
+          padding: 15px 0;
+        }
+        .notify {
+          margin-top: 20px;
+          .warning {
+            i {
+              color: red;
+            }
+          }
+          .done {
+            i {
+              color: green;
+            }
+          }
+        }
         input {
           width: 100%;
           border-radius: 8px;
@@ -166,6 +284,29 @@ export default {
         input::-webkit-input-placeholder {
           font-family: 'SFProText-Light', sans-serif;
           color: #c5cee0;
+        }
+        .file_input {
+          display: none;
+        }
+        .drop-block {
+          background: #f9fbfd;
+          border-radius: 8px;
+          border: 1px dotted #b5e0ff;
+          width: 159px;
+          display: flex;
+          flex-direction: column;
+          color: #c5cee0;
+          font-size: 12px;
+          justify-content: center;
+          align-items: center;
+          padding: 20px 25px;
+          text-align: center;
+          line-height: 1.2;
+          cursor: pointer;
+          img {
+            width: 35%;
+            margin-bottom: 10px;
+          }
         }
       }
     }

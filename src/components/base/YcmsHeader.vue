@@ -8,9 +8,9 @@
 
     <div class="user-control-block">
 
-      <div class="publish-button" @click="buildApplication()">Publish the app</div>
+      <div class="publish-button" @click="buildApplication()" v-if="currentApp">Publish the app</div>
       <div class="file-manager-icon" @click="$root.$emit('fmanager::open', true)">
-        <i class="far fa-folder-open"></i>
+<!--        <i class="far fa-folder-open"></i>-->
       </div>
       <div class="messages-icon new-event"></div>
       <div class="notification-icon new-event"></div>
@@ -42,6 +42,7 @@
 // import Language from "./Language";
 import {compile, imageUrl, swapSidebar} from "../../helpers/general"
 import AWN from 'awesome-notifications'
+import { mapGetters } from "vuex";
 
 export default {
   name: "ycms-header",
@@ -49,16 +50,6 @@ export default {
   // components: {
   //   Language
   // },
-
-  props: {
-    user: {
-      type: Object,
-      required: true,
-      default: () => {
-        return {}
-      }
-    }
-  },
 
   data() {
     return {
@@ -68,6 +59,9 @@ export default {
   },
 
   computed: {
+
+    ...mapGetters(['currentUser', 'getApplication']),
+
     title() {
       return this.$route.meta.title ? this.$route.meta.title : this.$root.pageTitle
     },
@@ -90,8 +84,8 @@ export default {
     },
 
     checkAvatar() {
-      if (this.user.extended.length) {
-        this.user.extended.forEach(val => {
+      if (this.currentUser.extended.length) {
+        this.currentUser.extended.forEach(val => {
           if (val.type_id === 2) {
             this.avatar = val.value
           }
@@ -111,26 +105,22 @@ export default {
     },
 
     buildApplication() {
-      axios.defaults.baseURL = this.$root.nodeUrl
+      const app = this.getApplication ? JSON.parse(this.getApplication) : null
 
-      console.log(this.$root.nodeUrl)
-      new AWN().async(
-          axios.get('/build/alex1/com.node.app'),
-          'Build complete',
-      )
+      if (!app) {
+        this.$awn.alert('ERROR')
+        return
+      }
 
-      // compile()
-      //   .then((res) => {
-      //     new AWN().async(
-      //         axios.get(`http://localhost:4000/${res.user_folder}/${res.app_folder}`),
-      //         'Build complete',
-      //     )
-      //   })
-      // compile('com.welcome.app', 'welcome.app')
-      //   .then((res) => {
-      //     console.log(res)
-      //   })
-      //
+      axios.get('publication/build')
+        .then((res) => {
+          if (res.data.success) {
+            this.$awn.success('Building process started')
+            axios.get(`/build/${this.currentUser.user_folder}/${app.folder}/${res.data['build_id']}`,
+                { baseURL: this.$root.nodeUrl}
+            )
+          }
+        })
     }
 
   }

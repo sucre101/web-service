@@ -1,19 +1,21 @@
 <template>
-  <div>
-    <page-navigation
-        :list="tabs"
-        :selected="currentIndex"
-        @change="changeView"
-    />
+  <div class="box-list">
 
-    <div v-for="(tab, index) in tabScreens">
-      <component :is="tab" v-show="index === currentIndex" :ref="'tab' + index"/>
+    <div class="top-header">
+      <PageNavigation
+          :component-list="tabScreens"
+          :return-component="true"
+          @component="setComponent"
+      />
+    </div>
+    <div class="main-block">
+      <component :is="component" ref="currentComponent"/>
     </div>
   </div>
 </template>
 
 <script>
-import PageNavigation from "@/components/base/PageNavigation"
+import PageNavigation from '../../base/PageNavigationTab'
 import MainTab from "./MainTab"
 import PaymentTab from "./payment/Index"
 import LogoTab from "./LogoTab"
@@ -30,11 +32,12 @@ export default {
     return {
       currentIndex: 0,
       tabs: [
-        { title: 'Main' },
-        { title: 'Logo' },
-        { title: 'Payment' },
-        { title: 'Company' },
+        { title: 'Global' },
+        { title: 'Resources' },
+        // { title: 'Payment' },
+        // { title: 'Company' },
       ],
+      component: MainTab,
       tabScreens: [
         MainTab, LogoTab, PaymentTab, Company
       ]
@@ -60,6 +63,11 @@ export default {
   },
 
   methods: {
+
+    setComponent($component) {
+      this.component = $component
+    },
+
 
     changeView(view) {
       this.currentIndex = view

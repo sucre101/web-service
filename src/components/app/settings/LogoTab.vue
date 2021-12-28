@@ -1,17 +1,11 @@
 <template>
   <div class="table-list-items">
-    <h4>Logo & SplashScreen</h4>
-
     <div class="main-block">
-
       <div class="change-block">
 
         <div class="background-picker">
-
           <span>Background</span>
-
           <ColorPicker :color="background" @update="updateBackground"/>
-
         </div>
 
         <div class="select-icon-block">
@@ -21,11 +15,9 @@
       </div>
 
       <div class="preview-block">
-
         <div class="phone" :style="{ 'background-color': background }" >
-          <img :src="getImageUrl(logo)" alt="" width="50%">
+          <img :src="getImageUrl(logo)" width="50%">
         </div>
-
       </div>
 
       <div class="btn-action blue" v-if="activeForSave" @click="updateAppSettings">Save</div>
@@ -41,7 +33,7 @@ import {imageUrl} from "@/helpers/general"
 
 export default {
   name: "logo-tab",
-
+  title: 'resources',
   components: {
     ColorPicker
   },
@@ -86,8 +78,8 @@ export default {
         case 'background_splash':
           this.background = item.value
           break;
-        case 'app_icon_src':
-          this.logo = item.value
+        case 'icon':
+          this.logo = '../storage/'+item.value
           break;
       }
 
@@ -161,7 +153,7 @@ export default {
     }
     .select-icon-block {
       display: flex;
-      width: 40%;
+      width: 15%;
       border: 1px dotted gray;
       img {
         width: 100%;
@@ -170,18 +162,16 @@ export default {
     }
   }
   .preview-block {
-    width: 25%;
+    width: 230px;
     display: flex;
     flex-direction: row;
     justify-content: center;
-    height: 100%;
+    height: 485px;
 
     .phone {
       background-image: url("~@/assets/img/ycms/phone.svg");
       background-repeat: no-repeat;
       background-size: contain;
-      height: 87%;
-      width: 100%;
       border-radius: 27px;
       display: flex;
       flex-direction: column;
@@ -191,8 +181,8 @@ export default {
   }
   .btn-action {
     position: absolute;
-    top: -45px;
-    right: -35px;
+    top: -73px;
+    right: 10px;
   }
 }
 

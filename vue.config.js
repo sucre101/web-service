@@ -1,7 +1,6 @@
 module.exports = {
   devServer: {
-    proxy: 'http://api.yappix.io/',
-    port: 3000
+    proxy: 'http://api.develop/',
+    port: 5000
   },
-  runtimeCompiler: true
 }
