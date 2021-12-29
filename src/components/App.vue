@@ -1,6 +1,8 @@
 <template>
   <div>
 
+    <preloader v-if="$root.loading"/>
+
     <div class="all-but-phone" v-if="isLoggedIn" :class="{ 'hidden-sidebar': getSidebar, 'dark-theme': darkMode }">
 
       <ycms-drawer-menu
@@ -23,7 +25,7 @@
 
       <Emulator v-if="emulator" ref="emulator"/>
 
-      <div class="emulator-btn" @click="swapEmulator()">
+      <div class="emulator-btn" @click="swapEmulator()" v-if="emulatorButton">
         Start emulator
       </div>
 
@@ -71,7 +73,8 @@ export default {
     return {
       app: {},
       currentApp: false,
-      emulator: false
+      emulator: false,
+      emulatorButton: false
     }
   },
 
@@ -97,6 +100,13 @@ export default {
 
     if (!this._.isEmpty(this.getApplication)) {
       setHeaders(this.app.slug)
+
+      if (this.$store.getters.canDownload === null) {
+        axios.get(`publication/build/check-complete/${this.app.id}`)
+            .then((res) => {
+              this.$store.commit('setDownload', res.data.success)
+            })
+      }
     }
 
     // if (!this.getApplication && this.currentUser) {

@@ -1,8 +1,5 @@
 <template>
   <div class="box-list modules">
-
-    <preloader v-if="$root.loading"/>
-
     <div class="top-header">
       <h4>Feature List</h4>
       <div class="feature-filter">

@@ -75,7 +75,7 @@ export default {
   methods: {
 
     getThumb(item) {
-      return item.image === null ? `/img/no_image.png` : item.image.src;
+      return item.image === null ? require('@/assets/img/no-image.png') : item.image.src;
     },
 
     editCategory(element) {

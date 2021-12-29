@@ -1,13 +1,8 @@
 <template>
-
   <div>
-    <preloader v-if="loading"/>
-
     <products-list v-if="!loading && !editProduct"/>
-
     <product v-if="editProduct"/>
   </div>
-
 </template>
 
 <script>

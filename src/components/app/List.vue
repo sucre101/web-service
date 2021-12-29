@@ -1,8 +1,6 @@
 <template>
   <div class="apps-list" :class="{ 'scroller' : appsCount }">
 
-    <preloader v-if="$root.loading"/>
-
     <div class="create" @click="createApp()">Create</div>
 
     <div class="create-app-block">

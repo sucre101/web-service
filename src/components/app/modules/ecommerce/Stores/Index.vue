@@ -1,12 +1,7 @@
 <template>
   <div>
-
-    <preloader :loading="loading" />
-
     <store-list v-if="!loading && !editStore" />
-
     <store v-if="editStore"/>
-
   </div>
 </template>
 

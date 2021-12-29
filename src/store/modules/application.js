@@ -3,7 +3,8 @@ export default {
   state: {
 
     application: localStorage.getItem('app'),
-    phoneBlockSize: localStorage.getItem('phoneSize')
+    phoneBlockSize: localStorage.getItem('phoneSize'),
+    downloadApp: localStorage.getItem('download')
 
   },
 
@@ -15,6 +16,10 @@ export default {
 
     getSizePhone(state) {
       return state.phoneBlockSize
+    },
+
+    canDownload(state) {
+      return state.downloadApp
     }
   },
 
@@ -27,6 +32,15 @@ export default {
     unsetApplication(state) {
       state.application = {}
       localStorage.removeItem('app')
+    },
+
+    setDownload(state, payload) {
+      localStorage.setItem('download', payload)
+    },
+
+    unsetDownload(state) {
+      state.downloadApp = null
+      localStorage.removeItem('download')
     },
 
     setPhoneSize(state, payload) {

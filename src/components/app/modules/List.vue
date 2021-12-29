@@ -1,6 +1,5 @@
 <template>
   <div class="box-list installed-modules">
-    <preloader v-if="$root.loading"/>
     <div class="top-header">
       <h4>Installed modules</h4>
     </div>

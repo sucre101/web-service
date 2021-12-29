@@ -8,7 +8,7 @@
         @click="_editView(item, 'products', 'product')"
       >
         <div class="thumb">
-          <img :src="item.images.length ? item.images[0].src : '/img/no_image.png'">
+          <img :src="getThumb(item)">
         </div>
         {{ item.name }}
       </div>
@@ -35,6 +35,9 @@ export default {
 
   methods: {
 
+    getThumb(item) {
+      return item.images.length ? item.images[0].src : require('@/assets/img/no-image.png')
+    }
 
   }
 }

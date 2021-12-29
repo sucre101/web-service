@@ -1,8 +1,5 @@
 <template>
   <div>
-
-    <preloader v-if="$root.loading"/>
-
     <div class="box-list">
       <template v-if="locAuth">
         <div class="top-header">
@@ -120,7 +117,13 @@ export default {
 
     }
 
+    this.$root.$children[0].emulatorButton = true
+
     // this.$root.$on('woo::load', res => this.loading = res)
+  },
+
+  destroyed() {
+    this.$root.$children[0].emulatorButton = false
   },
 
   computed: {

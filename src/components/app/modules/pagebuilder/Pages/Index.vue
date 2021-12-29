@@ -1,13 +1,8 @@
 <template>
-
   <div>
-    <preloader v-if="loading"/>
-
     <pages-list v-if="!loading && !editpage"/>
-
     <page v-if="editpage"/>
   </div>
-
 </template>
 
 <script>

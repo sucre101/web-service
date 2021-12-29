@@ -1,11 +1,7 @@
 <template>
   <div>
-    <preloader :loading="loading" />
-
     <categories-list v-if="!loading && !editCategory"/>
-
     <category v-if="editCategory"/>
-
   </div>
 </template>
 

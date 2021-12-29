@@ -8,7 +8,9 @@
 
     <div class="user-control-block">
 
-      <div class="publish-button" @click="buildApplication()" v-if="currentApp">Publish the app</div>
+      <div class="publish-button" @click="buildApplication()" v-if="currentApp && !$store.getters.canDownload">Publish the app</div>
+      <div class="publish-button" @click="downloadApp()" v-if="currentApp && $store.getters.canDownload">Download</div>
+
       <div class="file-manager-icon" @click="$root.$emit('fmanager::open', true)">
 <!--        <i class="far fa-folder-open"></i>-->
       </div>
@@ -16,7 +18,7 @@
       <div class="notification-icon new-event"></div>
       <div class="user-avatar" @click="$router.push({name: 'settings'})">
         <img :src="getAvatar(avatar)" alt="" v-if="avatar !== null">
-        <img v-else src="~@/assets/img/tsuker.jpg" />
+        <i class="far fa-user-circle" v-else></i>
       </div>
 
     </div>
@@ -53,8 +55,8 @@ export default {
 
   data() {
     return {
-      currentApp: {},
-      avatar: null
+      currentApp: this.$store.getters.getApplication ? JSON.parse(this.$store.getters.getApplication) : null,
+      avatar: null,
     }
   },
 
@@ -68,12 +70,6 @@ export default {
   },
 
   created() {
-    //
-    // if (this.app === null) {
-    //   this.$router.push('apps')
-    // }
-
-    // this.currentApp = this._.cloneDeep(this.app)
     this.checkAvatar()
   },
 
@@ -102,6 +98,22 @@ export default {
 
     getAvatar(src) {
       return imageUrl(src)
+    },
+
+    downloadApp() {
+
+      this.$root.$emit('loading', true)
+
+      axios.get(`/publication/download/${this.currentApp.id}`, {responseType: 'blob'})
+        .then((res) => {
+            const fileURL = window.URL.createObjectURL(new Blob([res.data]));
+            const fileLink = document.createElement('a');
+            fileLink.href = fileURL;
+            fileLink.setAttribute('download', 'app.apk');
+            document.body.appendChild(fileLink);
+            this.$root.$emit('loading', false)
+            fileLink.click();
+        })
     },
 
     buildApplication() {
@@ -184,6 +196,7 @@ header {
       align-items: center;
       justify-content: center;
       overflow: hidden;
+      font-size: 18px;
       img {
         width: 100%;
       }
