@@ -3,24 +3,21 @@
     <div class="top-header">
       <h4>Installed modules</h4>
     </div>
-    <div class="main-block list">
+    <div class="main-block grid">
       <div
         class="module"
         v-for="module in modules"
         :key="module.id"
-      >
-        <div @click="$router.push({
+        @click="$router.push({
             name: 'module-edit',
               params: {
                 moduleId: module.id,
                 folder: module.module.front_folder.toLowerCase()
               }
-          })">
-          <div>
-            <img :src="module.module.image">
-          </div>
-          {{ module.alias || module.module.name }}
-        </div>
+          })"
+      >
+        <img :src="module.module.image">
+        {{ module.alias || module.module.name }}
       </div>
     </div>
     <div class="bottom-footer">
@@ -77,6 +74,23 @@ export default {
       padding-left: 15px;
       font-size: 20px;
       font-family: 'SFProText-Light', sans-serif;
+    }
+  }
+  .module {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 15%;
+    height: 150px;
+    cursor: pointer;
+    img {
+      width: 65%;
+    }
+    &:hover {
+      -webkit-box-shadow: 0px 5px 5px -5px #e54896;
+      -moz-box-shadow: 0px 5px 5px -5px #e54896;
+      box-shadow: 0px 5px 5px -5px #e54896;
     }
   }
 }

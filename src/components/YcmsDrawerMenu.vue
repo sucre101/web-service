@@ -160,7 +160,10 @@ export default {
     }
     this.$root.$on('apps::refresh', ($data) => {
       this.appsList.push($data)
-      // TODO: Add logic to select created application in CMS
+      this.$store.dispatch('setApp', $data)
+      this.$nextTick(() => {
+        this.$router.push({name: 'module'})
+      })
     })
   },
 
@@ -177,10 +180,11 @@ export default {
         return
       }
 
+      this.$root.$emit('loading', true)
       axios.get('apps')
         .then((res) => {
           this.appsList = [...res.data.apps]
-          localStorage.setItem('m.apps', JSON.stringify(this.appsList))
+          // localStorage.setItem('m.apps', JSON.stringify(this.appsList))
         })
         .then(res => this.$root.$emit('loading', false))
 

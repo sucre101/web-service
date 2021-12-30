@@ -40,8 +40,6 @@ export function initialize(store, router) {
       return response
     }, error => {
       if (error.response.status === 401) {
-
-        // console.log(error)
         store.commit('logout')
         router.push('/sign-in')
       }

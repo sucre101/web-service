@@ -14,7 +14,7 @@
     <vue-custom-scrollbar class="content-scroll">
       <div class="main-block grid">
         <div class="module-block" v-for="module in modules">
-          <div class="icon">
+          <div class="icon" :class="{ disable : module['module_licence'] !== 1 }">
             <img :src="getImage(module.image)">
           </div>
           <div class="description">
@@ -26,11 +26,14 @@
               <ToggleCheck
                   :value="checkModuleInstalled(module)"
                   @complete="installModule($event, module)"
+                  :disabled="module['module_licence'] !== 1"
               />
               {{ getInstalledTitle(module) }}
             </div>
             <div class="button-action"
-                 :class="getModuleLicenseButtonColor(module)">
+                 :class="getModuleLicenseButtonColor(module)"
+                 @click="goLink(module)"
+            >
               {{ getModuleLicenceTitle(module) }}
             </div>
           </div>
@@ -82,6 +85,8 @@ export default {
           return 'Free'
         case 2:
           return 'Non free'
+        case 4:
+          return 'invest'
       }
     },
 
@@ -91,6 +96,8 @@ export default {
           return 'free-btn'
         case 2:
           return 'btn-buy'
+        case 4:
+          return 'button-invest'
       }
     },
 
@@ -120,6 +127,9 @@ export default {
     },
 
     getInstalledTitle($module) {
+      if ($module['module_licence'] !== 1) {
+        return 'unavailable'
+      }
       if (this.checkModuleInstalled($module)) {
         return `Installed`
       } else {
@@ -128,9 +138,7 @@ export default {
     },
 
     checkModuleInstalled($module) {
-
       let index = this._.findIndex(this.installedModules, { module_id: $module.id })
-
       return index !== -1;
     },
 
@@ -149,6 +157,12 @@ export default {
         })
         .then(res => this.$root.$emit('loading', false))
 
+    },
+
+    goLink($module) {
+      if ($module['module_licence'] !== 1) {
+        window.open('https://yappix.io/invest', '_blank');
+      }
     }
 
   }
@@ -179,7 +193,7 @@ export default {
     background-color: #f9fbfd;
     display: flex;
     width: 32%;
-    margin: 10px 0;
+    margin: 0 10px 10px 0;
     flex-direction: row;
     flex-wrap: wrap;
     &.future-module {
@@ -188,8 +202,14 @@ export default {
       }
     }
     .icon {
-      width: 45%;
+      width: 38%;
       display: flex;
+      &.disable {
+        img {
+          filter: grayscale(100%);
+          opacity: 0.6;
+        }
+      }
       img {
         width: 100%;
       }

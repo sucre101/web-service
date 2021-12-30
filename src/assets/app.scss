@@ -207,7 +207,7 @@ header {
       }
       .main-block {
         display: flex;
-        padding: 0 15px;
+        padding: 15px;
         min-height: 400px;
         max-height: 800px;
         &.list {
@@ -215,7 +215,7 @@ header {
         }
         &.grid {
           flex-direction: row;
-          justify-content: space-between;
+          justify-content: flex-start;
           flex-wrap: wrap;
         }
       }

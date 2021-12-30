@@ -55,6 +55,7 @@ import YcmsDrawerMenu from "./YcmsDrawerMenu"
 import FileManager from "@/components/base/filemanager/FileManager"
 import { setHeaders } from "../helpers/general";
 import Emulator from "./Emulator";
+import axios from "axios";
 // import Reference from "./base/Reference";
 
 
@@ -104,7 +105,11 @@ export default {
       if (this.$store.getters.canDownload === null) {
         axios.get(`publication/build/check-complete/${this.app.id}`)
             .then((res) => {
-              this.$store.commit('setDownload', res.data.success)
+              if (res.data.succes) {
+                this.$store.commit('setDownload', res.data.success)
+              } else {
+                // this.$store.dispatch('setApp')
+              }
             })
       }
     }
@@ -135,8 +140,8 @@ export default {
 
     })
 
-    this.$root.$on('emulate', (url) => {
-      this.emulator = true
+    this.$root.$on('emulate', (result) => {
+      this.emulator = result
     })
 
     this.$root.$on('loading', (res) => {
@@ -160,7 +165,12 @@ export default {
       this.$nextTick(() => {
         switch (this.$route.params.folder) {
           case 'woocommerce':
-            this.$refs.emulator.url = "https://wp.yappix.studio"
+            axios.get(`woocommerce/${this.$route.params.moduleId}/getSrc`)
+              .then((res) => {
+                if (res.data.success) {
+                  this.$refs.emulator.url = res.data.src.value
+                }
+              })
             break
         }
       })

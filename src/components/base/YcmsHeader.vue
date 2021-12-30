@@ -126,13 +126,12 @@ export default {
 
       axios.get('publication/build')
         .then((res) => {
-          if (res.data.success) {
-            this.$awn.success('Building process started')
-            axios.get(`/build/${this.currentUser.user_folder}/${app.folder}/${res.data['build_id']}`,
-                { baseURL: this.$root.nodeUrl}
-            )
-          }
+          this.$awn.success('Building process started')
+          axios.get(`/build/${this.currentUser.user_folder}/${app.folder}/${res.data['build_id']}`,
+              { baseURL: this.$root.nodeUrl}
+          )
         })
+        .catch(error => this.$awn.alert(error.response.data.error.message))
     }
 
   }

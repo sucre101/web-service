@@ -14,15 +14,15 @@
 
           <div class="input-group">
             <label>
-              <input type="text" placeholder="example: appname.app" class="y-input-text" v-model="appModel.name">
+              <input type="text" placeholder="App Name*" class="y-input-text" v-model.trim="appModel.name">
             </label>
           </div>
 
           <div class="input-group">
             <span>Icon</span>
-            <div @dragover.prevent @drop.prevent @click="$refs.icon.click()">
+            <div >
               <input type="file" @change="uploadFile" ref="icon" class="file_input"/>
-              <div @drop="dragFile" class="drop-block">
+              <div @drop="dragFile" class="drop-block" @dragover.prevent @drop.prevent @click="$refs.icon.click()">
                 <img src="@/assets/img/group-folder.png">
                 Select or Drop your files here
               </div>
@@ -71,8 +71,10 @@ export default {
       apps: [],
       modules: this.modulesList,
       appToDelete: null,
-      appModel: {},
-      step: 1,
+      appModel: {
+        name: '',
+        description: ''
+      },
       appsList: [],
       modulesList: [],
       appsCount: false,
@@ -90,7 +92,6 @@ export default {
   },
 
   created() {
-    this.$root.$emit('loading', true)
     this.$parent.currentApp = false
   },
 
@@ -102,13 +103,13 @@ export default {
 
     createApp() {
 
-      let form = new FormData()
-      form.append('file', this.$refs.icon.files[0])
-      form.append('name', this.appModel.name)
-      form.append('description', this.appModel.description)
-
       this.validate()
         .then( res => {
+          let form = new FormData()
+          form.append('file', this.$refs.icon.files[0])
+          form.append('name', this.appModel.name)
+          form.append('description', this.appModel.description)
+
           this.$awn.async(
               axios.post('/apps', form, { headers: {'Content-Type': 'multipart/form-data'} }),
               response => {
@@ -121,7 +122,9 @@ export default {
                   this.$awn.alert(response.data.error)
                 }
               },
-              ''
+              error => {
+                this.$awn.alert(error.response.data.errors.name[0])
+              }
           )
         })
         .catch(err => {
@@ -132,10 +135,11 @@ export default {
 
     validate() {
       return new Promise((res, rej) => {
-        let match = this.appModel.name.split('.')
-        if (match.length !== 2 && match[1] !== 'app') rej()
+        if (! /^[a-z0-9]+$/.test(this.appModel.name)) {
+          this.appModel.name = ''
+          rej()
+        }
         if (!this.$refs.icon.files.length) rej()
-
         res()
       })
     },
@@ -151,7 +155,7 @@ export default {
           if (this.image.width !== WIDTH && this.image.height !== HEIGHT) {
             this.$awn.alert('Another resolution icon')
             this.rFile = []
-            return
+            return false
           }
         }
         img.src = evt.target.result;

@@ -33,6 +33,7 @@
           ref="wooAuth"
           width="550"
           overlay-theme="dark"
+          hide-close-button blocking
       >
         <h4>Auth for WooCommerce Api</h4>
 
@@ -118,12 +119,11 @@ export default {
     }
 
     this.$root.$children[0].emulatorButton = true
-
-    // this.$root.$on('woo::load', res => this.loading = res)
   },
 
   destroyed() {
     this.$root.$children[0].emulatorButton = false
+    this.$root.$emit('emulate', false)
   },
 
   computed: {
@@ -161,10 +161,19 @@ export default {
     },
 
     tryConnect() {
-
+      this.$refs.wooAuth.close()
+      this.$root.$emit('loading', true)
       axios.post(`woocommerce/${this.moduleId}/set`, this.authForm)
         .then((res) => {
-          console.log(res)
+          if (res.data.success) {
+            this.locAuth = true
+            WOO.auth.set(this.locAuth)
+            this.$root.$emit('loading', false)
+            this.$refs.wooAuth.close()
+          } else {
+            this.$refs.wooAuth.open()
+            this.$root.$emit('loading', false)
+          }
         })
 
     },
